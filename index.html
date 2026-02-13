@@ -7,7 +7,6 @@
     <style>
       :root {
         color-scheme: light;
-        --yes-scale: 1;
       }
 
       * {
@@ -77,12 +76,6 @@
         background: #ff2f86;
         color: white;
         box-shadow: 0 10px 20px rgba(255, 47, 134, 0.35);
-        transform: scale(var(--yes-scale));
-        transform-origin: center;
-      }
-
-      #yesBtn:hover {
-        transform: scale(var(--yes-scale)) translateY(-2px);
       }
 
       #noBtn {
@@ -122,13 +115,6 @@
       const yesBtn = document.getElementById("yesBtn");
       const message = document.getElementById("message");
 
-      let yesScale = 1;
-
-      function growYesButton() {
-        yesScale = Math.min(2.8, yesScale + 0.12);
-        document.documentElement.style.setProperty("--yes-scale", yesScale.toFixed(2));
-      }
-
       function moveNoButton() {
         const areaRect = area.getBoundingClientRect();
         const btnRect = noBtn.getBoundingClientRect();
@@ -141,7 +127,6 @@
 
         noBtn.style.left = `${randomX}px`;
         noBtn.style.top = `${randomY}px`;
-        growYesButton();
       }
 
       noBtn.addEventListener("mouseenter", moveNoButton);
