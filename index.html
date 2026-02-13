@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine?</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --yes-scale: 1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(circle at top, #ffd6e7, #ff8fc3 55%, #ff5ca6);
+      }
+
+      .card {
+        width: min(92vw, 620px);
+        padding: 2rem;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 18px 48px rgba(194, 26, 107, 0.25);
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.6rem;
+        color: #b91268;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+      }
+
+      p {
+        margin-top: 0;
+        color: #5f1f42;
+        font-size: 1.05rem;
+      }
+
+      .love-image {
+        display: block;
+        width: min(100%, 420px);
+        margin: 1rem auto 0.8rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(194, 26, 107, 0.18);
+      }
+
+      .button-area {
+        position: relative;
+        margin-top: 1.2rem;
+        height: 170px;
+      }
+
+      button {
+        border: none;
+        padding: 0.9rem 1.4rem;
+        border-radius: 999px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      #yesBtn {
+        background: #ff2f86;
+        color: white;
+        box-shadow: 0 10px 20px rgba(255, 47, 134, 0.35);
+        transform: scale(var(--yes-scale));
+        transform-origin: center;
+      }
+
+      #yesBtn:hover {
+        transform: scale(var(--yes-scale)) translateY(-2px);
+      }
+
+      #noBtn {
+        position: absolute;
+        top: 90px;
+        left: calc(50% + 24px);
+        background: #f2d1e2;
+        color: #6e2f56;
+      }
+
+      #message {
+        margin-top: 1rem;
+        min-height: 1.8rem;
+        color: #8a0f50;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Will you be my Valentine? 💘</h1>
+      <p>I pinky promise this date includes snacks, laughter, and lots of love.</p>
+
+      <img class="love-image" src="assets/valentine-photo.png" alt="Cute dinosaur hugging another dinosaur with a valentine pun" />
+
+      <div class="button-area" id="buttonArea">
+        <button id="yesBtn" type="button">Yes! 🥰</button>
+        <button id="noBtn" type="button">No 🙈</button>
+      </div>
+
+      <div id="message" aria-live="polite"></div>
+    </main>
+
+    <script>
+      const area = document.getElementById("buttonArea");
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      const message = document.getElementById("message");
+
+      let yesScale = 1;
+
+      function growYesButton() {
+        yesScale = Math.min(2.8, yesScale + 0.12);
+        document.documentElement.style.setProperty("--yes-scale", yesScale.toFixed(2));
+      }
+
+      function moveNoButton() {
+        const areaRect = area.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+
+        const maxX = areaRect.width - btnRect.width;
+        const maxY = areaRect.height - btnRect.height;
+
+        const randomX = Math.random() * Math.max(0, maxX);
+        const randomY = Math.random() * Math.max(0, maxY);
+
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+        growYesButton();
+      }
+
+      noBtn.addEventListener("mouseenter", moveNoButton);
+      noBtn.addEventListener("focus", moveNoButton);
+
+      yesBtn.addEventListener("click", () => {
+        message.textContent = "YAY! Best Valentine ever! 💖";
+      });
+
+      noBtn.addEventListener("click", () => {
+        message.textContent = "Nice try 😏";
+      });
+    </script>
+  </body>
+</html>
